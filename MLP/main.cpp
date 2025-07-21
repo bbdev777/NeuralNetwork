@@ -28,7 +28,7 @@ void quadratic_example()
 {
     int     maxValue = 36;
     double  targetAccuracy = 0.1;
-    double  learning_rate = 0.005;
+    double  learning_rate = 0.007;
 
     MLP mlp(
     {
