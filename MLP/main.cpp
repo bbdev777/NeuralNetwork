@@ -26,16 +26,21 @@ vector<double> denormalize(const vector<double>& output, int maxValue) {
 
 void quadratic_example() 
 {
-    int     maxValue = 24;
+    int     maxValue = 36;
+    double  targetAccuracy = 0.05;
+    double  learning_rate = 0.0005;
+
     MLP mlp(
     {
         1, 
-        16, 
-        16, 
-        16,
+        24, 
+        24, 
+        24,
+        24,
         1
     }, 
     {
+        MLPActivators::leaky_relu,
         MLPActivators::leaky_relu,
         MLPActivators::leaky_relu,
         MLPActivators::leaky_relu,
@@ -45,9 +50,10 @@ void quadratic_example()
         MLPActivators::leaky_relu_derivative,
         MLPActivators::leaky_relu_derivative,
         MLPActivators::leaky_relu_derivative,
+        MLPActivators::leaky_relu_derivative,
         MLPActivators::identity_derivative
     },
-    3.0);
+    1.5);
 
     vector<vector<double>> inputs;
     vector<vector<double>> targets;
@@ -59,13 +65,11 @@ void quadratic_example()
 
     AppExecutionTimeCounter::StartMeasurement();
 
-    //Можно уменьшить в 10 раз и раскоментировтаь третий внутренний слой, результат будет лучше, а скорость обучения в 6 раз быстрее.
-    //Скорость вычисления сетью незначительно замедлится.
-    int epochs = 100000;
-    double learning_rate = 0.002;
-
-    for (int epoch = 0; epoch < epochs; ++epoch) {
-        double total_error = 0.0;
+    int    epoch = 0;
+    double total_error;
+    do 
+    {
+        total_error = 0.0;
 
         for (size_t i = 0; i < inputs.size(); ++i) {
             auto output = denormalize(mlp.train(normalize(inputs[i], maxValue), normalize(targets[i], maxValue), learning_rate), maxValue);
@@ -75,16 +79,20 @@ void quadratic_example()
 
         total_error /= inputs.size();
 
-        if (epoch % 10000 == 0) {
+        if (epoch % 10000 == 0) 
+        {
             cout << "Эпоха: " << epoch << ", Ошибка: " << total_error << endl;
         }
+
+        epoch ++;
     }
+    while(total_error > targetAccuracy);
 
     double trainingTimeSeconds = AppExecutionTimeCounter::EndMeasurement();
     printf("Время ренировки  (мек.) %1.3lf\n", trainingTimeSeconds);
 
     cout << "Результаты после обучения:" << endl;
-    cout << "x   Сеть   Мат. Разность" << endl;
+    cout << "x   Сеть   Мат.  Разность" << endl;
 
     AppExecutionTimeCounter::StartMeasurement();
     for (int x = 0; x <= maxValue; x ++) {
