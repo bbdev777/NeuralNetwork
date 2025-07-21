@@ -37,10 +37,12 @@ MLP::MLP(const vector<size_t> &neurons,
     bias.resize(neurons.size());
     for (size_t i = 0; i < neurons.size(); ++i)
     {
+        int j = 0;
         bias[i].resize(neurons[i]);
         for (auto &val : bias[i])
         {
-            val = random_double(-maxBiasValue, maxBiasValue);
+            val = sin(j);//random_double(-maxBiasValue, maxBiasValue);
+            j+= maxBiasValue;
         }
     }
 

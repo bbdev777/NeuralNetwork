@@ -9,7 +9,7 @@ using namespace std;
 vector<double> normalize(const vector<double>& input, int maxValue) {
     vector<double> normalized = input;
     for (auto& val : normalized) {
-        val /= double(maxValue);
+       val /= double(maxValue);
     }
     return normalized;
 }
@@ -26,7 +26,7 @@ vector<double> denormalize(const vector<double>& output, int maxValue) {
 
 void quadratic_example() 
 {
-    int     maxValue = 15;
+    int     maxValue = 24;
     MLP mlp(
     {
         1, 
@@ -47,7 +47,7 @@ void quadratic_example()
         MLPActivators::leaky_relu_derivative,
         MLPActivators::identity_derivative
     },
-    0.25);
+    3.0);
 
     vector<vector<double>> inputs;
     vector<vector<double>> targets;
@@ -62,7 +62,7 @@ void quadratic_example()
     //Можно уменьшить в 10 раз и раскоментировтаь третий внутренний слой, результат будет лучше, а скорость обучения в 6 раз быстрее.
     //Скорость вычисления сетью незначительно замедлится.
     int epochs = 100000;
-    double learning_rate = 0.001;
+    double learning_rate = 0.002;
 
     for (int epoch = 0; epoch < epochs; ++epoch) {
         double total_error = 0.0;
