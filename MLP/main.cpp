@@ -33,7 +33,8 @@ void quadratic_example()
         16, 
         16, 
         16,
-        1}, 
+        1
+    }, 
     {
         MLPActivators::leaky_relu,
         MLPActivators::leaky_relu,
@@ -46,7 +47,7 @@ void quadratic_example()
         MLPActivators::leaky_relu_derivative,
         MLPActivators::identity_derivative
     },
-    0.15);
+    0.25);
 
     vector<vector<double>> inputs;
     vector<vector<double>> targets;
@@ -61,7 +62,7 @@ void quadratic_example()
     //Можно уменьшить в 10 раз и раскоментировтаь третий внутренний слой, результат будет лучше, а скорость обучения в 6 раз быстрее.
     //Скорость вычисления сетью незначительно замедлится.
     int epochs = 100000;
-    double learning_rate = 0.01;
+    double learning_rate = 0.001;
 
     for (int epoch = 0; epoch < epochs; ++epoch) {
         double total_error = 0.0;
