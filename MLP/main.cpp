@@ -27,8 +27,8 @@ vector<double> denormalize(const vector<double>& output, int maxValue) {
 void quadratic_example() 
 {
     int     maxValue = 36;
-    double  targetAccuracy = 0.05;
-    double  learning_rate = 0.0005;
+    double  targetAccuracy = 0.1;
+    double  learning_rate = 0.005;
 
     MLP mlp(
     {

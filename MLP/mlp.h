@@ -18,7 +18,7 @@ private:
     std::vector<std::vector<double>> data;
     std::vector<std::function<double(double)>> activations;
     std::vector<std::function<double(double)>> activationDerivatives;
-
+    std::vector<std::vector<double>> gradients;
 
     double alpha = 1.0;
   

@@ -62,10 +62,13 @@ MLP::MLP(const vector<size_t> &neurons,
     }
 
     data.resize(neurons.size());
+    gradients.resize(data.size());
     for (size_t i = 0; i < neurons.size(); ++i)
     {
         data[i].resize(neurons[i]);
+        gradients[i].resize(data[i].size());
     }
+
 }
 
 void MLP::calculate()
@@ -104,10 +107,9 @@ vector<double> MLP::train(const vector<double> &input, const vector<double> &tar
     data[0] = input;
     calculate();
 
-    vector<vector<double>> gradients(data.size());
     for (size_t i = 0; i < data.size(); ++i)
     {
-        gradients[i].resize(data[i].size(), 0.0);
+        gradients[i].assign(data[i].size(), 0.0);
     }
 
     for (size_t i = 0; i < data.back().size(); ++i)
